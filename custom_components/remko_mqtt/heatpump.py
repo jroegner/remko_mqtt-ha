@@ -96,16 +96,11 @@ class HeatPump:
                                 self._hpstate[k] = (
                                     -(raw & 0x8000) | (raw & 0x7FFF)
                                 ) / 10
-                            if reg_id[self._id_reg[k]][1] == "sensor_mode":
-                                mode = f"opmode{int(json_dict[k], 16)}"
-                                self._hpstate[k] = id_names[mode][self._langid]
-                            if reg_id[self._id_reg[k]][1] == "select_input":
-                                if self._id_reg[k] == "main_mode":
-                                    mode = f"mode{int(json_dict[k], 16)}"
-                                elif self._id_reg[k] == "dhw_opmode":
-                                    mode = f"dhwopmode{int(json_dict[k], 16)}"
-                                self._hpstate[k] = id_names[mode][self._langid]
-
+                             if reg_id[self._id_reg[k]][1] in ["sensor_mode","select_input"]:
+                            mode = f"{self._id_reg[k]}{int(json_dict[k], 16)}"  
+                            self._hpstate[k] = id_names[mode][self._langid]
+                        else:
+                            _LOGGER.debug("IGNORE [%s] [%s]", k, json_dict[k])
                     self._hpstate["communication_status"] = json_dict.get(
                         "vp_read", "Ok"
                     )
