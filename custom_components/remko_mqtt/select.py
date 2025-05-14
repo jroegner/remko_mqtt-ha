@@ -60,11 +60,11 @@ async def async_setup_entry(
 
             if key == "main_mode":
                 for i in range(1, 5):
-                    mode = "mode" + str(i)
+                    mode = "main_mode" + str(i)
                     vp_options.append(id_names[mode][heatpump._langid])
             elif key == "dhw_opmode":
                 for i in range(4):
-                    mode = "dhwopmode" + str(i)
+                    mode = "dhw_opmode" + str(i)
                     vp_options.append(id_names[mode][heatpump._langid])
 
             entities.append(
